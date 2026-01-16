@@ -8,18 +8,30 @@ st.set_page_config(
 
 from view import acceuil, prediction, statistique, recommandation
 
-
+# -----------------------------
+# État du menu
+# -----------------------------
+if "hide_menu" not in st.session_state:
+    st.session_state.hide_menu = True
 
 # -----------------------------
-# Cacher le menu Streamlit
+# Bouton ON / OFF
 # -----------------------------
-st.markdown("""
-<style>
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-header {visibility: hidden;}
-</style>
-""", unsafe_allow_html=True)
+if st.sidebar.button(
+    "👁️ Afficher le menu Streamlit" if st.session_state.hide_menu else "🙈 Cacher le menu Streamlit"
+):
+    st.session_state.hide_menu = not st.session_state.hide_menu
+
+# -----------------------------
+# CSS conditionnel
+# -----------------------------
+if st.session_state.hide_menu:
+    st.markdown("""
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    </style>
+    """, unsafe_allow_html=True)
 
 # -----------------------------
 # Navigation personnalisée
